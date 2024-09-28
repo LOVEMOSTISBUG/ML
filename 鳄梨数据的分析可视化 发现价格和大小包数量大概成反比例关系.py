@@ -55,41 +55,27 @@ def gradient_descent(X, y, w_in, b_in, cost_function, gradient_function, alpha, 
 
 orig_data = np.loadtxt("data_set/鳄梨价格.csv",dtype=str,skiprows=1,delimiter=",")
 X_train =  np.array(np.delete(orig_data,[0,1,2,3,4,5,6,10,11,12],1),dtype=np.float32) #只取小中大包(*_*)
-#X_train = X_train * [0.001,0.001,0.001]#原始数据属实太大 乘个系数
-X_train[X_train==0]=1
-X_train = np.reciprocal(X_train)
-X_train[X_train==1]=0
-X_train = X_train * [1,10,100]  #取倒数，乘系数都不太好用了
+X_train = X_train * [0.0001,0.0001,0.0001]#原始数据属实太大 乘个系数
+#X_train[X_train==0]=1
+#X_train = np.reciprocal(X_train)
+#X_train[X_train==1]=0
+#X_train = X_train * [1,10,100]  #取倒数，乘系数都不太好
 y_train =  np.array(orig_data[:,1],dtype=np.float32)
 
-print(X_train)
 
-plt.rcParams['font.family'] = 'STSong'#设置中文字体防止口口
-plt.figure()
+plt.subplot(611)
+plt.scatter(X_train[:,0],y_train, c='b')
+
+plt.subplot(612)
+plt.scatter(X_train[:,1],y_train, c='b')
+
+plt.subplot(613)
+plt.scatter(X_train[:,2],y_train, c='b')    #测试得到大小包数量和价格大概成反比例关系
 
 
-plt.subplot(331)
-#initial_w = np.zeros(X_train.shape[1])#一个和特征数量相等的全零矩阵
-#initial_b = 0.
 
-initial_w =[1.0,1.0,1.0]
-initial_b = 1.0
 
-iterations = 100
-alpha = 5.0e-2 
-w_final, b_final, J_hist = gradient_descent(X_train, y_train, initial_w, initial_b,compute_cost, compute_gradient, alpha, iterations)
-print(f"b,w found by gradient descent: {b_final:0.2f},{w_final} ")
-m,_ = X_train.shape
-for i in range(m):
-    print(f"当迭代{iterations}次 学习率为{alpha}时 prediction: {np.dot(X_train[i], w_final) + b_final:0.2f}, target value: {y_train[i]}")
-plt.plot(np.arange(iterations),J_hist, c='b')
-plt.title(f"迭代{iterations}次  学习率为{alpha}")
-plt.ylabel('J的值')
-plt.xlabel('迭代次数')
 
 
 
 plt.show()
-
-
-#修改起始位置 整改特征参数都不太好使了 试试打个点图看看数据的关联?
