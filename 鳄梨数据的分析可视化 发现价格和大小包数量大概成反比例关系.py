@@ -79,3 +79,5 @@ plt.scatter(X_train[:,2],y_train, c='b')    #测试得到大小包数量和价�
 
 
 plt.show()
+
+
